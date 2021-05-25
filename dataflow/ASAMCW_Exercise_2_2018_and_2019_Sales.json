@@ -1,0 +1,28 @@
+{
+	"name": "ASAMCW_Exercise_2_2018_and_2019_Sales",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "asamcw_sales_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "salesdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "asamcw_sale_asa",
+						"type": "DatasetReference"
+					},
+					"name": "sale"
+				}
+			],
+			"transformations": [],
+			"script": "source(output(\n\t\tTransactionId as string,\n\t\tCustomerId as integer,\n\t\tProductId as short,\n\t\tQuantity as byte,\n\t\tPrice as decimal(38,18),\n\t\tTotalAmount as decimal(38,18),\n\t\tTransactionDate as integer,\n\t\tProfitAmount as decimal(38,18),\n\t\tHour as byte,\n\t\tMinute as byte,\n\t\tStoreId as short,\n\t\tYear as string,\n\t\tQuarter as string,\n\t\tMonth as string,\n\t\tDay as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['sale-small/Year=2018/*/*/*/*','sale-small/Year=2019/*/*/*/*']) ~> salesdata\nsalesdata sink(input(\n\t\tTransactionId as string,\n\t\tCustomerId as integer,\n\t\tProductId as integer,\n\t\tQuantity as integer,\n\t\tPrice as decimal(9,2),\n\t\tTotalAmount as decimal(9,2),\n\t\tTransactionDateId as integer,\n\t\tProfitAmount as decimal(9,2),\n\t\tHour as integer,\n\t\tMinute as integer,\n\t\tStoreId as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tstaged: true,\n\tallowCopyCommand: true,\n\tmapColumn(\n\t\tTransactionId,\n\t\tCustomerId,\n\t\tProductId,\n\t\tQuantity,\n\t\tPrice,\n\t\tTotalAmount,\n\t\tTransactionDateId = TransactionDate,\n\t\tProfitAmount,\n\t\tHour,\n\t\tMinute,\n\t\tStoreId\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sale"
+		}
+	}
+}

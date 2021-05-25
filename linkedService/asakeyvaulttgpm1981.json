@@ -1,0 +1,11 @@
+{
+	"name": "asakeyvaulttgpm1981",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://asakeyvaulttgpm1981.vault.azure.net/"
+		}
+	}
+}

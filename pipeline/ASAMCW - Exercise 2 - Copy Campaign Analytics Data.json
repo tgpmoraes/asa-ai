@@ -1,0 +1,41 @@
+{
+	"name": "ASAMCW - Exercise 2 - Copy Campaign Analytics Data",
+	"properties": {
+		"activities": [
+			{
+				"name": "ASAMCW_Exercise_2_Campaign_Analytics_Data",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ASAMCW_Exercise_2_Campaign_Analytics_Data",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "asadatalaketgpm1981",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "staging/mcwcampaignanalytics"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-05-25T17:47:44Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}
